@@ -57,16 +57,16 @@ docker-build-optimized: ## Build optimized multi-stage Docker image
 
 docker-run: ## Run application with Docker Compose
 	@echo "Starting services with Docker Compose..."
-	docker-compose -f deployments/docker-compose.yml up -d
+	docker compose -f deployments/docker-compose.yml up -d
 	@echo "Services started. API available at http://localhost:8080"
 
 docker-down: ## Stop Docker Compose services
 	@echo "Stopping services..."
-	docker-compose -f deployments/docker-compose.yml down
+	docker compose -f deployments/docker-compose.yml down
 	@echo "Services stopped"
 
 docker-logs: ## View Docker Compose logs
-	docker-compose -f deployments/docker-compose.yml logs -f
+	docker compose -f deployments/docker-compose.yml logs -f
 
 lint: ## Run golangci-lint
 	@echo "Running linter..."
