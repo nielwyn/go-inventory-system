@@ -13,14 +13,11 @@ RUN go mod download
 # Copy source code
 COPY . .
 
-# Build the application
-RUN go build -o /app/bin/api ./cmd/api
+# Build the application with static linking
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o /app/bin/api ./cmd/api
 
-# Final stage
-FROM alpine:latest
-
-# Install ca-certificates for HTTPS
-RUN apk --no-cache add ca-certificates
+# Final stage - using scratch for minimal image
+FROM scratch
 
 WORKDIR /app
 
@@ -28,7 +25,7 @@ WORKDIR /app
 COPY --from=builder /app/bin/api .
 
 # Copy .env.example for reference
-COPY .env.example .
+COPY --from=builder /app/.env.example .
 
 # Expose port
 EXPOSE 8080
