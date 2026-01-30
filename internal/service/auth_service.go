@@ -19,9 +19,9 @@ type AuthService interface {
 }
 
 type authService struct {
-	userRepo    repository.UserRepository
-	jwtSecret   string
-	jwtExpiry   int
+	userRepo  repository.UserRepository
+	jwtSecret string
+	jwtExpiry int
 }
 
 // NewAuthService creates a new auth service
